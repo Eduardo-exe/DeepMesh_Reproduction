@@ -4,7 +4,7 @@ This repository contains an educational and methodological reproduction inspired
 
 ## 🚀 Reproducibility Guide
 
-Follow these steps to reproduce our environment and results. 
+Follow these steps to reproduce our environment and results.
 
 ### 1. Installation
 
@@ -21,26 +21,40 @@ pip install -r requirements.txt
 
 ### 2. Dataset Preparation
 
-To prepare a 3D model for our pipeline, you need to convert it into the expected `.npz` format:
+Convert all models inside the `examples/` directory into the dataset format expected by the pipeline:
 
 ```bash
-python convert_dataset.py --input examples/JEEPCOMPASS2021.obj --output dataset/shape.npz
+python convert_dataset.py --input examples/ --output dataset/
 ```
+
+This command will process every supported 3D model contained in the `examples/` folder and generate the corresponding `.npz` files.
 
 ### 3. Running Inference
 
-To generate a 3D Mesh from a Point Cloud representation, run the inference script. You can specify the number of points to sample:
+Run inference for every model contained in the `examples/` directory:
 
 ```bash
-python infer.py --input examples/JEEPCOMPASS2021.obj --output outputs/ --num_points 100000
+python infer.py --input examples/ --output outputs/ --num_points 100000
 ```
-> **Output:** This will automatically export the generated Point Cloud (`.ply`) and the reconstructed watertight Mesh (`.obj`) with gradients into the `outputs/` directory.
+
+> **Output:** For each input model, the pipeline automatically exports:
+>
+> - Sampled Point Cloud (`.ply`)
+> - Reconstructed watertight Mesh (`.obj`)
+> - Additional intermediate outputs (when enabled)
+
+All generated files are stored inside the `outputs/` directory.
 
 ### 4. Evaluation and Metrics
 
-To evaluate the generated mesh against the Ground Truth (or other models like MeshAnythingV2 / BPT) using Chamfer Distance and Hausdorff Distance, use the evaluation script:
+Evaluate every reconstructed mesh against its corresponding Ground Truth:
 
 ```bash
-python evaluate_metrics.py --gt examples/JEEPCOMPASS2021.obj --pred outputs/JEEPCOMPASS2021_mesh.obj
+python evaluate_metrics.py --gt examples/ --pred outputs/
 ```
-This command will output the computed metrics necessary for benchmark comparisons.
+
+The script automatically matches the generated meshes with their corresponding ground-truth models and reports metrics such as:
+
+- Chamfer Distance
+- Hausdorff Distance
+- Other supported benchmark metrics
