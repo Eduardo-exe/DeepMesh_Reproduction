@@ -44,7 +44,6 @@ python infer.py --input examples/ --output outputs/ --num_points 100000
 ```
 
 For every processed model, the pipeline automatically generates:
-
 - Sampled Point Cloud (`.ply`)
 - Reconstructed Mesh (`.obj`)
 - Intermediate files (when enabled)
@@ -62,7 +61,6 @@ python evaluate_metrics.py --gt examples/ --pred outputs/
 ```
 
 The evaluation automatically matches each prediction with its corresponding input model and computes metrics such as:
-
 - Chamfer Distance
 - Hausdorff Distance
 
@@ -81,6 +79,14 @@ DeepMesh_Reproduction/
 ├── requirements.txt
 └── README.md
 ```
+
+---
+
+## 📦 3D Models Source
+
+The 3D models used in the `examples/` directory as ground-truth references were obtained from free assets available on **CGTrader**:
+
+🔗 [https://www.cgtrader.com/3d-models?free=1](https://www.cgtrader.com/3d-models?free=1)
 
 ---
 
